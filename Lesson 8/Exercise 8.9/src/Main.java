@@ -1,3 +1,4 @@
+/*Fix the method to print strings in the reverse order(medium) recursion*/
 import java.util.Scanner;
 
 public class Main {
@@ -9,7 +10,7 @@ public class Main {
             int last = s.length() - 1;
             System.out.print(s.charAt(last));//change place with printReverseCharByChar(s.substring(0, last));
             printReverseCharByChar(s.substring(0, last));//change place with System.out.print(s.charAt(last));
-        /*
+        /* Other method:
             StringBuilder sb = new StringBuilder(s);
         System.out.println(sb.reverse());
             */
