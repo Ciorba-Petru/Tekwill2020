@@ -22,7 +22,13 @@ public class TicTacToe {
     }
 }
 
-
+public void Player() {
+        if (currentPlayerMark == 'O') {
+            currentPlayerMark = 'X';
+        } else {
+            currentPlayerMark = 'O';
+        }
+    }
 
 
 
