@@ -12,7 +12,7 @@ class Test {
             employ();
         }
 @Override
-        protected void employ() {
+        public void employ() {
             System.out.println(numTeamLead + " teamlead");
         }
     }
