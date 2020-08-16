@@ -1,19 +1,28 @@
 import java.util.Scanner;
 
-public class TicTacToe {
+class TicTacToe {
+
     private char[][] board = new char[3][3];
-    private char currentPlayerMark;
+    Scanner sc = new Scanner(System.in);
+
+    public TicTacToe() {
+        int nextChar = 0;
+        System.out.print("Enter cells: ");
+        String state = sc.nextLine();
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                board[i][j] = state.charAt(nextChar++);
+            }
+        }
+
+    }
 
     public void printBoard() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter cells: ");
-        String input = sc.nextLine();
-        int nextChar = 0;
         System.out.println("---------");
         for (int i = 0; i < 3; i++) {
             System.out.print("| ");
             for (int j = 0; j < 3; j++) {
-                board[i][j] = input.charAt(nextChar++);
                 System.out.print(board[i][j] + " ");
             }
             System.out.println("|");
@@ -21,71 +30,59 @@ public class TicTacToe {
         System.out.println("---------");
     }
 
-    public boolean checkForWinX() {
+    public void changeBoard() {
+        while (true) {
+            System.out.print("Enter the coordinates: ");
+            int n = sc.nextInt();
+            int m = sc.nextInt();
+            if (n < 1 || n > 3 || m < 1 || m > 3) {
+                System.out.println("Coordinates should be from 1 to 3!");
+            } else {
+                int x = n - 1;
+                int y = m - 1;
+                if (board[x][y] == '_') {
+                    this.board[x][y] = 'X';
+                    break;
+                } else {
+                    System.out.println("This cell is occupied! Choose another one!");
+                }
 
-        return (checkRowsForWinX() || checkColumnsForWinX() || checkDiagonalsForWinX());
+            }
+        }
+        printBoard();
+    }
+}
+   /* private boolean hasWon(char ch) {
+        return (checkRowForChar(ch) || checkColumnsChar(ch) || checkDiagonals(ch));
     }
 
-    public boolean checkForWinO() {
-
-        return (checkRowsForWinO() || checkColumnsForWinO() || checkDiagonalsForWinO());
-    }
-
-    public boolean checkRowsForWinX() {
+    private boolean checkRowForChar(char ch) {
         for (int i = 0; i < 3; i++) {
-            if (checkX(board[i][0], board[i][1], board[i][2])) {
+            if (check(ch, board[i][0], board[i][1], board[i][2])) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean checkRowsForWinO() {
+    private boolean checkColumnsChar(char ch) {
         for (int i = 0; i < 3; i++) {
-            if (checkO(board[i][0], board[i][1], board[i][2])) {
+            if (check(ch, board[0][i], board[1][i], board[2][i])) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean checkColumnsForWinX() {
-        for (int i = 0; i < 3; i++) {
-            if (checkX(board[0][i], board[1][i], board[2][i])) {
-                return true;
-            }
-        }
-        return false;
+    private boolean checkDiagonals(char ch) {
+        return ((check(ch, board[0][0], board[1][1], board[2][2])) || (check(ch, board[0][2], board[1][1], board[2][0])));
     }
 
-    public boolean checkColumnsForWinO() {
-        for (int i = 0; i < 3; i++) {
-            if (checkO(board[0][i], board[1][i], board[2][i])) {
-                return true;
-            }
-        }
-        return false;
+    private boolean check(char ch, char c1, char c2, char c3) {
+        return ((c1 == ch) && (c1 == c2) && (c2 == c3));
     }
 
-    public boolean checkDiagonalsForWinX() {
-        return ((checkX(board[0][0], board[1][1], board[2][2])) || (checkX(board[0][2], board[1][1], board[2][0])));
-    }
-
-    public boolean checkDiagonalsForWinO() {
-        return ((checkO(board[0][0], board[1][1], board[2][2])) || (checkX(board[0][2], board[1][1], board[2][0])));
-    }
-
-    public boolean checkX(char c1, char c2, char c3) {
-
-        return ((c1 == 'X') && (c1 == c2) && (c2 == c3));
-    }
-
-    public boolean checkO(char c1, char c2, char c3) {
-
-        return ((c1 == 'O') && (c1 == c2) && (c2 == c3));
-    }
-
-    public boolean isImpossible() {
+    private boolean isImpossible() {
         int countX = 0;
         int countO = 0;
         for (int i = 0; i <3; i++) {
@@ -97,9 +94,10 @@ public class TicTacToe {
                 }
             }
         }
-            return Math.abs(countX - countO) > 1;
+        return Math.abs(countX - countO) > 1;
     }
-    public boolean isFinished() {
+
+    private boolean isFinished() {
         for (int i = 0; i <3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[i][j] == '_') {
@@ -109,23 +107,20 @@ public class TicTacToe {
         }
         return true;
     }
-        public String result () {
-            if (checkForWinX() && checkForWinO()|| isImpossible()) {
-                return "Impossible";
-            } else if (checkForWinX()) {
-                return "X wins";
-            } else if (checkForWinO()) {
-                return "O wins";
-            } else if (!isFinished()) {
-                return "Game not finished";
 
-            }
-            return "Draw";
+   public String getResult() {
+        boolean xWon = hasWon('X');
+        boolean oWon = hasWon('O');
+
+        if (xWon && oWon || isImpossible()) {
+            return "Impossible";
+        } else if (xWon) {
+            return "X wins";
+        } else if (oWon) {
+            return "O wins";
+        } else if (!isFinished()) {
+            return "Game not finished";
+
         }
-    }
-
-
-
-
-
-
+        return "Draw";
+    }*/
