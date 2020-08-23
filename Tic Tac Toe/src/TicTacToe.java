@@ -4,18 +4,14 @@ class TicTacToe {
 
     private char[][] board = new char[3][3];
     Scanner sc = new Scanner(System.in);
+    char player = 'X';
 
     public TicTacToe() {
-        int nextChar = 0;
-        System.out.print("Enter cells: ");
-        String state = sc.nextLine();
-
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                board[i][j] = state.charAt(nextChar++);
+                board[i][j] = ' ';
             }
         }
-
     }
 
     public void printBoard() {
@@ -31,28 +27,37 @@ class TicTacToe {
     }
 
     public void changeBoard() {
-        while (true) {
+        while (!hasWon('X') && !hasWon('O') && !isFinished()) {
+
             System.out.print("Enter the coordinates: ");
             int n = sc.nextInt();
             int m = sc.nextInt();
+
             if (n < 1 || n > 3 || m < 1 || m > 3) {
                 System.out.println("Coordinates should be from 1 to 3!");
             } else {
                 int x = n - 1;
                 int y = m - 1;
-                if (board[x][y] == '_') {
+
+                if (board[x][y] == ' ' && player == 'X') {
                     this.board[x][y] = 'X';
-                    break;
+                    player = 'O';
+
+                } else if (board[x][y] == ' ' && player == 'O') {
+                    this.board[x][y] = 'O';
+                    player = 'X';
+
                 } else {
                     System.out.println("This cell is occupied! Choose another one!");
                 }
-
             }
+            printBoard();
         }
-        printBoard();
+        System.out.println(getResult());
     }
-}
-   /* private boolean hasWon(char ch) {
+
+
+    private boolean hasWon(char ch) {
         return (checkRowForChar(ch) || checkColumnsChar(ch) || checkDiagonals(ch));
     }
 
@@ -82,25 +87,10 @@ class TicTacToe {
         return ((c1 == ch) && (c1 == c2) && (c2 == c3));
     }
 
-    private boolean isImpossible() {
-        int countX = 0;
-        int countO = 0;
-        for (int i = 0; i <3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (board[i][j] == 'X') {
-                    countX++;
-                } else if (board[i][j] == 'O') {
-                    countO++;
-                }
-            }
-        }
-        return Math.abs(countX - countO) > 1;
-    }
-
     private boolean isFinished() {
-        for (int i = 0; i <3; i++) {
+        for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (board[i][j] == '_') {
+                if (board[i][j] == ' ') {
                     return false;
                 }
             }
@@ -108,19 +98,15 @@ class TicTacToe {
         return true;
     }
 
-   public String getResult() {
+    public String getResult() {
         boolean xWon = hasWon('X');
         boolean oWon = hasWon('O');
 
-        if (xWon && oWon || isImpossible()) {
-            return "Impossible";
-        } else if (xWon) {
+        if (xWon) {
             return "X wins";
         } else if (oWon) {
             return "O wins";
-        } else if (!isFinished()) {
-            return "Game not finished";
-
         }
         return "Draw";
-    }*/
+    }
+}
