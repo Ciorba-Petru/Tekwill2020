@@ -7,11 +7,10 @@ public class Minesweeper {
     Random randNum = new Random();
     Scanner sc = new Scanner(System.in);
 
-    public void Minesweeper() {
+    public Minesweeper() {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 minesweeper[i][j] = '*';
-                //System.out.print(minesweeper[i][j] = (char) (120 + randNum.nextInt(10)));
             }
         }
     }
