@@ -6,6 +6,7 @@ public class Minesweeper {
     public static void main(String[] args) {
         Minesweeper minesweeper = new Minesweeper();
         minesweeper.randomX();
+        minesweeper.changeMinesweeper();
     }
 
     char[][] minesweeper = new char[9][9];
