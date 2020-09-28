@@ -6,7 +6,11 @@ public class Minesweeper {
     public static void main(String[] args) {
         Minesweeper minesweeper = new Minesweeper();
         minesweeper.randomX();
+<<<<<<< HEAD
         minesweeper.game();
+=======
+        minesweeper.changeMinesweeper();
+>>>>>>> 561acc813f5444530af545df6db5d261a0ef05bc
     }
 
     private static final int NR_OF_FIELDS = 81;
@@ -136,5 +140,8 @@ public class Minesweeper {
         printMinesweeper();
     }
 }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 561acc813f5444530af545df6db5d261a0ef05bc
